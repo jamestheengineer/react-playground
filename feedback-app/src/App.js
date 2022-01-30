@@ -5,6 +5,7 @@ import FeedbackList from './components/FeedbackList';
 import FeedbackData from './data/FeedbackData';
 import FeedbackStats from './components/FeedbackStats';
 import FeedbackForm from './components/FeedbackForm';
+import AboutPage from './pages/AboutPage';
 import { isContentEditable } from '@testing-library/user-event/dist/utils';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <FeedbackForm handleAdd={addFeedback} />
         <FeedbackStats feedback={feedback} />
         <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
+        <AboutPage></AboutPage>
       </div>
     </>
   );
