@@ -9,7 +9,32 @@ export const FeedbackProvider = ({ children }) => {
       text: 'This item is from context',
       rating: 10,
     },
+    {
+      id: 2,
+      text: 'This item is from context',
+      rating: 4,
+    },
+    {
+      id: 3,
+      text: 'This item is from context',
+      rating: 2,
+    },
   ]);
+
+  // Add feedback
+  const addFeedback = async (newFeedback) => {
+    const response = await fetch('/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFeedback),
+    });
+
+    const data = await response.json();
+
+    setFeedback([data, ...feedback]);
+  };
 
   // Delete feedback
   const deleteFeedback = async (id) => {
@@ -25,6 +50,7 @@ export const FeedbackProvider = ({ children }) => {
       value={{
         feedback,
         deleteFeedback,
+        addFeedback,
       }}
     >
       {children}
