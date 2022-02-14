@@ -21,6 +21,11 @@ export const FeedbackProvider = ({ children }) => {
     },
   ]);
 
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    item: {},
+    edit: false,
+  });
+
   // Add feedback
   const addFeedback = async (newFeedback) => {
     const response = await fetch('/feedback', {
@@ -45,12 +50,18 @@ export const FeedbackProvider = ({ children }) => {
     }
   };
 
+  // Set item to be updated
+  const editFeedback = (item) => {
+    setFeedbackEdit({ item, edit: true });
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
         feedback,
         deleteFeedback,
         addFeedback,
+        editFeedback,
       }}
     >
       {children}
