@@ -1,4 +1,4 @@
-import UseRefExample2 from './components/UseRefExample3'
+import UseRefExample3 from './components/UseRefExample3'
 
 function App() {
   return (
