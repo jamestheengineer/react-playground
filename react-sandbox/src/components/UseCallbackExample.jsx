@@ -1,0 +1,26 @@
+import { useState, useCallback } from 'react'
+
+function UseCallbackExample() {
+  const [tasks, setTasks] = useState([])
+
+  const addTask = () => {
+    setTasks((prevState) => [...prevState, 'Some Task'])
+  }
+  return (
+    <div>
+      <Button addTask={addTask}></Button>
+    </div>
+  )
+}
+
+const Button = ({ addTask }) => {
+  console.log('Button rendered')
+  return (
+    <div>
+      <button className='btn btn-primary' onClick={addTask}>
+        Add Task
+      </button>
+    </div>
+  )
+}
+export default UseCallbackExample
