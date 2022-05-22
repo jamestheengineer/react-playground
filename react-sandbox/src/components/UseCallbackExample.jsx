@@ -1,19 +1,22 @@
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 
 function UseCallbackExample() {
   const [tasks, setTasks] = useState([])
 
-  const addTask = () => {
+  const addTask = useCallback(() => {
     setTasks((prevState) => [...prevState, 'Some Task'])
-  }
+  }, [setTasks])
   return (
     <div>
       <Button addTask={addTask}></Button>
+      {tasks.map((task, index) => (
+        <p key={index}>{task}</p>
+      ))}
     </div>
   )
 }
 
-const Button = ({ addTask }) => {
+const Button = React.memo(({ addTask }) => {
   console.log('Button rendered')
   return (
     <div>
@@ -22,5 +25,5 @@ const Button = ({ addTask }) => {
       </button>
     </div>
   )
-}
+})
 export default UseCallbackExample
