@@ -11,7 +11,12 @@ function SignIn() {
   })
   const { email, password } = formData
   const navigate = useNavigate()
-  const onChange = () => {}
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }))
+  }
 
   return (
     <>
@@ -56,6 +61,10 @@ function SignIn() {
               </button>
             </div>
           </form>
+          {/* Google OAuth */}
+          <Link to='/sign-up' className='registerLink'>
+            Sign Up Instead
+          </Link>
         </main>
       </div>
     </>
