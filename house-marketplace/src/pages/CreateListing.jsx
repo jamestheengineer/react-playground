@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Spinner from '../components/Spinner'
 
 function CreateListing() {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(false)
+  const [geolocationEnabled, setGeolocationEnabled] = useState(true)
   const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
@@ -72,6 +72,36 @@ function CreateListing() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+
+    setLoading(true)
+
+    if (discountedPrice >= regularPrice) {
+      setLoading(false)
+      toast.error('Discounted price needs to be less than regular price')
+      return
+    }
+
+    if (images.length > 6) {
+      setLoading(false)
+      toast.error('Max 6 images')
+      return
+    }
+
+    let geolocation = {}
+    let location
+
+    if (geolocationEnabled) {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&`
+      )
+
+      const data = await response.json()
+    } else {
+      geolocation.lat = latitude
+      geolocation.lng = longitude
+    }
+
+    setLoading(false)
   }
 
   const onMutate = (e) => {
