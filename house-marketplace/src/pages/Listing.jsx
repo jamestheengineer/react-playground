@@ -46,7 +46,7 @@ function Listing() {
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Scrollbar, A11y]}
-        spaceBetween={50}
+        spaceBetween={500}
         slidesPerView={3}
         navigation
         pagination={{ clickable: true }}
@@ -54,9 +54,11 @@ function Listing() {
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log('slide change')}
       >
-        <SwiperSlide>
-          <img src='${listing.imgUrls[0]}' />
-        </SwiperSlide>
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <img className='swiper-image' src={listing.imgUrls[index]} />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <div
