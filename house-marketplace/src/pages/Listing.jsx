@@ -3,13 +3,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/swiper-bundle.css'
+import 'swiper/css/bundle'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/a11y'
 import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { db } from '../firebase.config'
 import Spinner from '../components/Spinner'
 import shareIcon from '../assets/svg/shareIcon.svg'
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y])
 
 function Listing() {
   const [listing, setListing] = useState(null)
@@ -26,7 +29,6 @@ function Listing() {
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        console.log(docSnap.data())
         setListing(docSnap.data())
         setLoading(false)
       }
@@ -38,22 +40,25 @@ function Listing() {
   if (loading) {
     return <Spinner />
   }
-
+  console.log(listing.imgUrls)
   return (
     <main>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
-        {listing.imgUrls.map((url, index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                background: `url(${listing.imgUrls[index]}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='swiperSlideDiv'
-            ></div>
-          </SwiperSlide>
-        ))}
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={3}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
+      >
+        <SwiperSlide>
+          <img src='${listing.imgUrls[0]}' />
+        </SwiperSlide>
       </Swiper>
+
       <div
         className='shareIconDiv'
         onClick={() => {
@@ -139,6 +144,7 @@ function Listing() {
     </main>
   )
 }
+
 export default Listing
 
 // https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
